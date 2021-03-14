@@ -1,0 +1,13 @@
+# NodeJS specific #
+.nyc_output/
+coverage/
+node_modules/
+npm-debug.log
+package-lock.json
+test/*.log
+
+/dist
+.settings/
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
