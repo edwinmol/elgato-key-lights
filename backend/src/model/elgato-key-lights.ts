@@ -10,10 +10,3 @@ export interface ElgatoKeyLightStatus {
     brightness: number,
     temperature: number
 }
-
-export interface DiscoveredService {
-    addresses: string[],
-    name: string,
-    host: string,
-    port: string,
-}
