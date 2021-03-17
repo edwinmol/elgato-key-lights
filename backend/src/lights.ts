@@ -2,7 +2,7 @@ import axios from "axios";
 import { RemoteService } from "bonjour";
 import { from, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
-import { ElgatoKeyLight, ElgatoKeyLightStatus } from "./model/elgato-key-lights";
+import { ElgatoKeyLight, ElgatoKeyLightStatus } from "./model";
 
 // The lights we want to control
 export const lights : Record<string, ElgatoKeyLight> = {};

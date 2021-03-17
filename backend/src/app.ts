@@ -22,6 +22,7 @@ import * as discovery from "./discovery";
 
 const app = express();
 const port = 3000;
+
 // make sure we understand json
 app.use(express.json());
 

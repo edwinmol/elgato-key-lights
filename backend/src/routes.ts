@@ -4,7 +4,7 @@ import * as express from "express";
 import { forkJoin, from, Observable } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { lights, syncStatus, updateStatus } from "./lights";
-import { ElgatoKeyLight, ElgatoKeyLightStatus } from "./model/elgato-key-lights";
+import { ElgatoKeyLight, ElgatoKeyLightStatus } from "./model";
 
 export const register = ( app: express.Application ) => {
 
@@ -14,17 +14,15 @@ export const register = ( app: express.Application ) => {
     });
     app.put('/', (req, res) => {
         const body = req.body;  
-        if (body) {
-            
-            //const ids: string[] = (Array.isArray(req.query.id) ? req.query.id : [req.query.id]) as string[];
+        if (body) {            
             const ids = Object.keys(lights);
             const cmd: ElgatoKeyLightStatus = {
                 on: body.on ? 1 : 0, 
                 brightness: body.brightness, 
                 temperature: body.temperature
             };
-    
-            return forkJoin(ids.map(id => updateStatus(id,cmd))).subscribe(lights => res.send(lights));
+            return forkJoin(ids.map(id => updateStatus(id,cmd)))
+                .subscribe(lights => res.send(lights));
                     
         } else {
             res.send({result: "no change"});  
