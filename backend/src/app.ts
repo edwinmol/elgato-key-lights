@@ -15,10 +15,47 @@ import * as discovery from "./discovery";
 //
 // baseUrl example = http://192.168.0.245:9123
 //
-// POST ${baseUrl}/elgato/identify --> blink light
-// GET/PUT ${baseUrl}/elgato/lights --> control light
-// GET/PUT ${baseUrl}/elgato/lights/settings --> read/update lights settings
-// GET/PUT ${baseUrl}/elgato/accessory-info --> read/udpate info
+// Blink light                 -->  POST    ${baseUrl}/elgato/identify 
+// Control light               -->  GET/PUT ${baseUrl}/elgato/lights 
+// Read/update lights settings -->  GET/PUT ${baseUrl}/elgato/lights/settings  
+// Read/udpate info            -->  GET/PUT ${baseUrl}/elgato/accessory-info  
+//
+//
+// Control light               -->  GET/PUT ${baseUrl}/elgato/lights 
+// {
+//   "numberOfLights": 1,
+//   "lights": [
+//       {
+//           "on": 0,
+//           "brightness": 17,
+//           "temperature": 162
+//       }
+//   ]
+// }
+// 
+// Read/update lights settings -->  GET/PUT ${baseUrl}/elgato/lights/settings  
+// {
+//   "powerOnBehavior": 2, // 1: restore last used setting, 2: use setting values
+//   "powerOnBrightness": 3,
+//   "powerOnTemperature": 143,
+//   "switchOnDurationMs": 100,
+//   "switchOffDurationMs": 300,
+//   "colorChangeDurationMs": 100
+// }
+//
+// Read/udpate info            -->  GET/PUT ${baseUrl}/elgato/accessory-info  
+// {
+//   "productName": "Elgato Key Light Air",
+//   "hardwareBoardType": 200,
+//   "firmwareBuildNumber": 199,
+//   "firmwareVersion": "1.0.3",
+//   "serialNumber": "CW31J1A04554",
+//   "displayName": "Right",    // only this field is updateable
+//   "features": [
+//       "lights"
+//   ]
+// }
+
 
 const app = express();
 const port = 3000;

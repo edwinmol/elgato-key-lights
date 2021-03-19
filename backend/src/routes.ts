@@ -1,26 +1,22 @@
-import axios from "axios";
-import { RemoteService } from "bonjour";
 import * as express from "express";
-import { forkJoin, from, Observable } from "rxjs";
-import { map, tap } from "rxjs/operators";
-import { lights, syncStatus, updateStatus } from "./lights";
-import { ElgatoKeyLight, ElgatoKeyLightStatus } from "./model";
+import { forkJoin } from "rxjs";
+import { blink, lights, settings, syncStatus, updateAccessoryInfo, updateSettings, updateStatus } from "./lights";
+import { ElgatoKeyLightStatus } from "./model";
 
 export const register = ( app: express.Application ) => {
 
+    // Return the list of registered lights
     app.get('/', (req, res) => {
-        return forkJoin(Object.keys(lights).map(light => syncStatus(lights[light])))
+        return forkJoin(Object.keys(lights).map(id => syncStatus(lights[id])))
             .subscribe(lights => res.send(lights));
     });
+    // Set status of 'all' registered lights simultaneously
     app.put('/', (req, res) => {
         const body = req.body;  
         if (body) {            
             const ids = Object.keys(lights);
-            const cmd: ElgatoKeyLightStatus = {
-                on: body.on ? 1 : 0, 
-                brightness: body.brightness, 
-                temperature: body.temperature
-            };
+            const cmd: ElgatoKeyLightStatus = extractStatus(body);
+            console.log(cmd);
             return forkJoin(ids.map(id => updateStatus(id,cmd)))
                 .subscribe(lights => res.send(lights));
                     
@@ -28,23 +24,90 @@ export const register = ( app: express.Application ) => {
             res.send({result: "no change"});  
         }
     });
+    // Get light by id
+    app.get('/:id', (req, res) => {
+        syncStatus(lights[req.params.id]).subscribe(
+            (light) => res.send(light),
+            () => res.send({result: "error"})
+        );
+    });
+    // Blink a light
+    app.post('/:id', (req, res) => {
+        blink(req.params.id)
+            .subscribe(
+                (light) => res.send(light),
+                (error) => {
+                    console.log(error);
+                    res.send({result: "error"});
+                });        
+    });
+    // Set status of an individual light with its id
     app.put('/:id', (req, res) => {
         const body = req.body;  
         if (body) {
-            const cmd: ElgatoKeyLightStatus = {
-                on: body.on ? 1 : 0, 
-                brightness: body.brightness, 
-                temperature: body.temperature
-            };
-            updateStatus(req.params.id,cmd).subscribe(light => res.send(light));        
+            const cmd: ElgatoKeyLightStatus = extractStatus(body);
+            updateStatus(req.params.id,cmd)
+                .subscribe(
+                    (light) => res.send(light),
+                    (error) => {
+                        console.log(error);
+                        res.send({result: "error"});
+                    });        
         } else {
             res.send({result: "no change"});  
         }
     });
-    app.post('/:id', (req, res) => {
-        const light: ElgatoKeyLight = lights[req.params.id];
-        axios.post(`http://${light.ip}:9123/elgato/identify`,{})
-        res.send({result: "OK"});
-    });
+    // Get light settings
+    app.get('/settings/:id', (req, res) => {
+        settings(req.params.id)
+            .subscribe(
+                (result) => res.send(result),
+                (error) => {
+                    console.log(error);
+                    res.send({result: "error"});
+                }
+            )
+        }
+    );    
+    // Update light settings
+    app.put('/settings/:id', (req, res) => {
+        updateSettings(req.params.id,req.body)
+            .subscribe(
+                (result) => res.send(result),
+                (error) => {
+                    console.log(error);
+                    res.send({result: "error"});
+                }
+            )
+        }
+    );    
+    // Update accessory info: displayName
+    app.put('/info/:id', (req, res) => {
+        if (req.body && req.body.displayName) {            
+            updateAccessoryInfo(req.params.id,req.body)
+            .subscribe(
+                (result) => res.send(result),
+                (error) => {
+                    console.log(error);
+                    res.send({result: "error"});
+                }
+            )
+        } else {
+            res.send({result: "no change"});
+        }
+    });      
 
 };
+
+function extractStatus(body: any): ElgatoKeyLightStatus {
+    var result: ElgatoKeyLightStatus = {};
+    result.on = body.on ? body.on : 0;
+
+    if (body.brightness) {
+        result.brightness = body.brightness;
+    }    
+    if (body.temperature) {
+        result.temperature = body.temperature;
+    }
+    return result;
+}
