@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
     "run": "tsc && node dist/app.js",
     "start": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,7 +1,6 @@
-import axios from 'axios';
-import express from 'express';
-import * as routes from "./routes";
+import express from "express";
 import * as discovery from "./discovery";
+import * as routes from "./routes";
 
 // ---------------------
 // TESTING WITH CURL:
@@ -15,13 +14,13 @@ import * as discovery from "./discovery";
 //
 // baseUrl example = http://192.168.0.245:9123
 //
-// Blink light                 -->  POST    ${baseUrl}/elgato/identify 
-// Control light               -->  GET/PUT ${baseUrl}/elgato/lights 
-// Read/update lights settings -->  GET/PUT ${baseUrl}/elgato/lights/settings  
-// Read/udpate info            -->  GET/PUT ${baseUrl}/elgato/accessory-info  
+// Blink light                 -->  POST    ${baseUrl}/elgato/identify
+// Control light               -->  GET/PUT ${baseUrl}/elgato/lights
+// Read/update lights settings -->  GET/PUT ${baseUrl}/elgato/lights/settings
+// Read/udpate info            -->  GET/PUT ${baseUrl}/elgato/accessory-info
 //
 //
-// Control light               -->  GET/PUT ${baseUrl}/elgato/lights 
+// Control light               -->  GET/PUT ${baseUrl}/elgato/lights
 // {
 //   "numberOfLights": 1,
 //   "lights": [
@@ -32,8 +31,8 @@ import * as discovery from "./discovery";
 //       }
 //   ]
 // }
-// 
-// Read/update lights settings -->  GET/PUT ${baseUrl}/elgato/lights/settings  
+//
+// Read/update lights settings -->  GET/PUT ${baseUrl}/elgato/lights/settings
 // {
 //   "powerOnBehavior": 2, // 1: restore last used setting, 2: use setting values
 //   "powerOnBrightness": 3,
@@ -43,7 +42,7 @@ import * as discovery from "./discovery";
 //   "colorChangeDurationMs": 100
 // }
 //
-// Read/udpate info            -->  GET/PUT ${baseUrl}/elgato/accessory-info  
+// Read/udpate info            -->  GET/PUT ${baseUrl}/elgato/accessory-info
 // {
 //   "productName": "Elgato Key Light Air",
 //   "hardwareBoardType": 200,
@@ -56,18 +55,19 @@ import * as discovery from "./discovery";
 //   ]
 // }
 
-
 const app = express();
 const port = 3000;
 
+// serve static files from the public directory
+app.use(express.static("public"));
 // make sure we understand json
 app.use(express.json());
 
 // Configure routes
-routes.register( app );
+routes.register(app, "elgato");
 
 // Discover nodes
-discovery.register( app );
+discovery.register(app);
 
 app.listen(port, () => {
   return console.log(`server is listening on ${port}`);
