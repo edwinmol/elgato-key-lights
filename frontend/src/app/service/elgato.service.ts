@@ -6,9 +6,9 @@ import { ElgatoKeyLight, ElgatoKeyLightStatus } from '../model/elgato-key-light'
 @Injectable({
   providedIn: 'root'
 })
-export class LightsService {
+export class ElgatoService {
 
-  baseUrl = '/api/light';
+  baseUrl = '/elgato';
 
   constructor(private http: HttpClient) { }
 
