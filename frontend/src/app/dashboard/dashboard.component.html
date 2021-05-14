@@ -1,1 +1,3 @@
-<p>dashboard works!</p>
+<h1>Elgato Key Lights</h1>
+<button *ngFor="let light of lights" (click)="toggle(light)" class="toggle">{{ light.name }}</button>
+
