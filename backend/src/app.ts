@@ -69,6 +69,6 @@ routes.register(app, "elgato");
 // Discover nodes
 discovery.register(app);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
   return console.log(`server is listening on ${port}`);
 });
