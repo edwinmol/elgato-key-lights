@@ -13,7 +13,7 @@
   </div>
   <div class="body">
     <div class="row">
-      <mat-icon>brightness_low</mat-icon>
+      <mat-icon class="icon">brightness_low</mat-icon>
       <mat-slider
         min="1"
         max="100"
@@ -21,10 +21,10 @@
         [(value)]="light.status.brightness"
         (change)="onBrightnessChange.emit($event.value)"
       ></mat-slider>
-      <mat-icon>brightness_high</mat-icon>
+      <mat-icon class="icon">brightness_high</mat-icon>
     </div>
     <div class="row">
-      <mat-icon>ac_unit</mat-icon>
+      <mat-icon class="icon">ac_unit</mat-icon>
       <mat-slider
         min="143"
         max="344"
@@ -32,7 +32,7 @@
         [(value)]="light.status.temperature"
         (change)="onTemperatureChange.emit($event.value)"
       ></mat-slider>
-      <mat-icon>local_fire_department</mat-icon>
+      <mat-icon class="icon">local_fire_department</mat-icon>
     </div>
   </div>
 </div>
