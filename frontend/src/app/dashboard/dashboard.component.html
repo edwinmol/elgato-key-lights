@@ -1,3 +1,32 @@
-<h1>Elgato Key Lights</h1>
-<button *ngFor="let light of lights" (click)="toggle(light)" class="toggle">{{ light.name }}</button>
-
+<mat-card class="dashboard">
+  <mat-card-header>
+    <button
+      mat-card-avatar
+      [color]="allOn ? 'primary' : 'black'"
+      mat-mini-fab
+      aria-label="On/Off"
+      class="toggle"
+      (click)="toggleAll()"
+    >
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
+    <mat-card-title>Lights</mat-card-title>
+    <mat-card-subtitle>Elgato Key Lights</mat-card-subtitle>
+    <section style="flex: 1"></section>
+    <section class="sync">
+      <mat-slide-toggle [checked]="synchronize" (toggleChange)="toggleSynchonize()" color="primary"
+        >synchronize</mat-slide-toggle
+      >
+    </section>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngFor="let light of lights">
+      <app-keylight
+        [light]="light"
+        (onBrightnessChange)="setBrightness(light.id, $event)"
+        (onTemperatureChange)="setTemperature(light.id, $event)"
+        (onToggle)="toggle(light.id)"
+      ></app-keylight>
+    </ng-container>
+  </mat-card-content>
+</mat-card>

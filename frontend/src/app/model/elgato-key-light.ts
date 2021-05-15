@@ -6,6 +6,6 @@ export interface ElgatoKeyLight {
 
 export interface ElgatoKeyLightStatus {
     on: number,
-    brightness: number,
-    temperature: number
+    brightness?: number,
+    temperature?: number
 }

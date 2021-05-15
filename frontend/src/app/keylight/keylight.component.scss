@@ -1,0 +1,41 @@
+.light {
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+}
+h3 {
+  margin: 0;
+  padding: 0.2em;
+}
+.title {
+  flex-grow: 1;
+  margin-left: 1em;
+}
+
+.slide-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+}
+
+.body {
+  padding: 0 0 0 4em;
+}
+.mat-slider {
+  width: 100%;
+}
+.toggle {
+}

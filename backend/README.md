@@ -3,12 +3,12 @@
 ## Get all discovered elgato key lights
 
 ```
-GET /
+GET /elgato
 ```
 
 example curl:
 ```
-curl -X GET -H "Content-Type: application/json" http://192.168.0.195:3000 | jq
+curl -X GET -H "Content-Type: application/json" http://192.168.0.195:3000/elgato | jq
 
 [
   {
@@ -39,7 +39,7 @@ curl -X GET -H "Content-Type: application/json" http://192.168.0.195:3000 | jq
 ## Control all lights simultaneously
 
 ```
-PUT /
+PUT /elgato
 {
     "on": true,
     "brightness": 10,
@@ -49,7 +49,7 @@ PUT /
 
 example curl:
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"on":true,     "brightness": 10,"temperature": 300}' http://192.168.0.195:3000 | jq
+curl -X PUT -H "Content-Type: application/json" -d '{"on":true,     "brightness": 10,"temperature": 300}' http://192.168.0.195:3000/elgato | jq
 
 [
   {
@@ -80,12 +80,12 @@ curl -X PUT -H "Content-Type: application/json" -d '{"on":true,     "brightness"
 ## Get light by id
 
 ```
-GET /:id
+GET /elgato/:id
 ```
 
 example curl:
 ```
-curl -X GET http://192.168.0.195:3000/elgato-key-light-air-8711 | jq
+curl -X GET http://192.168.0.195:3000/elgato/elgato-key-light-air-8711 | jq
 
 {
   "id": "elgato-key-light-air-8711",
@@ -103,12 +103,12 @@ curl -X GET http://192.168.0.195:3000/elgato-key-light-air-8711 | jq
 ## Identify(Blink) a light
 
 ```
-POST /:id
+POST /elgato/:id
 ```
 
 example curl
 ```
-curl -X POST http://192.168.0.195:3000/elgato-key-light-air-8064 | jq
+curl -X POST http://192.168.0.195:3000/elgato/elgato-key-light-air-8064 | jq
 
 {
   "id": "elgato-key-light-air-8064",
@@ -126,7 +126,7 @@ curl -X POST http://192.168.0.195:3000/elgato-key-light-air-8064 | jq
 ## Control individual light
 
 ```
-PUT /:id
+PUT /elgato/:id
 
 {
     "on": true,
@@ -137,7 +137,7 @@ PUT /:id
 
 example curl:
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"on":true,     "brightness": 10,"temperature": 300}' http://192.168.0.195:3000/elgato-key-light-air-8064 | jq
+curl -X PUT -H "Content-Type: application/json" -d '{"on":true,     "brightness": 10,"temperature": 300}' http://192.168.0.195:3000/elgato/elgato-key-light-air-8064 | jq
 
 {
   "id": "elgato-key-light-air-8064",
@@ -155,12 +155,12 @@ curl -X PUT -H "Content-Type: application/json" -d '{"on":true,     "brightness"
 ## Get light settings
 
 ```
-GET /settings/:id
+GET /elgato/settings/:id
 ```
 
 example curl:
 ```
-curl -X GET http://192.168.0.195:3000/settings/elgato-key-light-air-8064 | jq
+curl -X GET http://192.168.0.195:3000/elgato/settings/elgato-key-light-air-8064 | jq
 
 {
   "powerOnBehavior": 1,
@@ -189,14 +189,14 @@ PUT /settings/:id
 
 example curl:
 ```
-curl -X PUT -H "Content-Type: application/json" -d ' {"powerOnBehavior": 1,"powerOnBrightness": 10,"powerOnTemperature": 143,"switchOnDurationMs": 100,"switchOffDurationMs": 300,"colorChangeDurationMs": 100}' http://192.168.0.195:3000/settings/elgato-key-light-air-8064 | jq
+curl -X PUT -H "Content-Type: application/json" -d ' {"powerOnBehavior": 1,"powerOnBrightness": 10,"powerOnTemperature": 143,"switchOnDurationMs": 100,"switchOffDurationMs": 300,"colorChangeDurationMs": 100}' http://192.168.0.195:3000/elgato/settings/elgato-key-light-air-8064 | jq
 
 ```
 
 ## Update display name
 
 ```
-PUT /info/:id
+PUT /elgato/info/:id
 
 {
   "displayName": "My keylight"
@@ -205,6 +205,6 @@ PUT /info/:id
 
 example curl:
 ```
-curl -X PUT -H "Content-Type: application/json" -d '{"displayName": "My keylight"}' http://192.168.0.195:3000/info/elgato-key-light-air-8064 | jq
+curl -X PUT -H "Content-Type: application/json" -d '{"displayName": "My keylight"}' http://192.168.0.195:3000/elgato/info/elgato-key-light-air-8064 | jq
 
 ```

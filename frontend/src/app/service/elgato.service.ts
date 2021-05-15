@@ -1,27 +1,28 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { ElgatoKeyLight, ElgatoKeyLightStatus } from '../model/elgato-key-light'
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import {
+  ElgatoKeyLight,
+  ElgatoKeyLightStatus,
+} from '../model/elgato-key-light';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ElgatoService {
-
   baseUrl = '/elgato';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  get(): Observable<ElgatoKeyLight[]>  {
+  get(): Observable<ElgatoKeyLight[]> {
     return this.http.get<ElgatoKeyLight[]>(this.baseUrl);
   }
 
   update(id: string, status: ElgatoKeyLightStatus): Observable<ElgatoKeyLight> {
-    return this.http.put<ElgatoKeyLight>(`${this.baseUrl}/${id}`,status);
+    return this.http.put<ElgatoKeyLight>(`${this.baseUrl}/${id}`, status);
   }
 
-  updateAll(ids: number[], status: ElgatoKeyLightStatus): Observable<ElgatoKeyLight> {
-    return this.http.put<ElgatoKeyLight>(`${this.baseUrl}`,status);
+  updateAll(status: ElgatoKeyLightStatus): Observable<ElgatoKeyLight[]> {
+    return this.http.put<ElgatoKeyLight[]>(`${this.baseUrl}`, status);
   }
-
 }

@@ -1,0 +1,38 @@
+<div class="light">
+  <div class="header">
+    <button
+      [color]="light.status.on ? 'primary' : 'black'"
+      mat-mini-fab
+      aria-label="On/Off"
+      (click)="toggle()"
+      class="toggle"
+    >
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
+    <h3 class="title">{{ light.name }}</h3>
+  </div>
+  <div class="body">
+    <div class="row">
+      <mat-icon>brightness_low</mat-icon>
+      <mat-slider
+        min="1"
+        max="100"
+        step="1"
+        [(value)]="light.status.brightness"
+        (change)="onBrightnessChange.emit($event.value)"
+      ></mat-slider>
+      <mat-icon>brightness_high</mat-icon>
+    </div>
+    <div class="row">
+      <mat-icon>ac_unit</mat-icon>
+      <mat-slider
+        min="143"
+        max="344"
+        step="1"
+        [(value)]="light.status.temperature"
+        (change)="onTemperatureChange.emit($event.value)"
+      ></mat-slider>
+      <mat-icon>local_fire_department</mat-icon>
+    </div>
+  </div>
+</div>
